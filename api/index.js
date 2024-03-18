@@ -32,9 +32,11 @@ app.get('/api', async (req, res) => {
         res.send(response.data);
     } catch (error) {
         console.error(error);
-        res.status(error.response?.status || 500).send('Error fetching URL');
+        const responseData = error.response ? error.response.data : error.message;
+        res.status(error.response?.status || 500).send(JSON.stringify(responseData));
     }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
