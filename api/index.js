@@ -5,6 +5,16 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define your routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'selectCourse.html'));
+});
+
+
 const burp0_cookies = {
     "__Secure-next-auth.session-token": "a6f35133-dea1-48d2-94c3-c2ea42394b29"
 };
