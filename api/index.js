@@ -33,6 +33,7 @@ app.get('/api', async (req, res) => {
     } catch (error) {
         console.error(error);
         const responseData = error.response ? error.response.data : error.message;
+        console.log(responseData)
         res.status(error.response?.status || 500).send(JSON.stringify(responseData));
     }
 });
