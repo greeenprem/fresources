@@ -19,7 +19,7 @@ const burp0_cookies = {
     "__Secure-next-auth.session-token": "a6f35133-dea1-48d2-94c3-c2ea42394b29"
 };
 
-app.get('/api/*', async (req, res) => {
+app.get('/*', async (req, res) => {
     const subUrl = req.path;
     console.log(subUrl);
     if (!subUrl) {
