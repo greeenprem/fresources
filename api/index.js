@@ -26,15 +26,12 @@ app.get('/api/*', async (req, res) => {
         return res.status(400).send('No query URL provided');
     }
 
-    try {
+    
         const response = await axios.get(("https://fresources.tech/"+subUrl), { headers: { Cookie: Object.keys(burp0_cookies).map(key => `${key}=${burp0_cookies[key]}`).join('; ') } });
         res.set('content-type', response.headers['content-type']);
         console.log(response.data)
         res.send(response.data);
-    } catch (error) {
-        console.error(error);
-        res.status(error.response?.status || 500).send('Error fetching URL');
-    }
+    
 });
 
 
