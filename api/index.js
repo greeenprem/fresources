@@ -20,18 +20,30 @@ const burp0_cookies = {
 };
 
 app.get('/api/*', async (req, res) => {
-    const subUrl = req.path
+    const subUrl = req.path;
     console.log(subUrl);
     if (!subUrl) {
         return res.status(400).send('No query URL provided');
     }
 
-    
-        const response = await axios.get(("https://fresources.tech/"+subUrl), { headers: { Cookie: Object.keys(burp0_cookies).map(key => `${key}=${burp0_cookies[key]}`).join('; ') } });
+    try {
+        const response = await axios.get("https://fresources.tech" + subUrl, {
+            headers: {
+                Cookie: Object.keys(burp0_cookies).map(key => `${key}=${burp0_cookies[key]}`).join('; ')
+            }
+        });
         res.set('content-type', response.headers['content-type']);
-        console.log(response.data)
+        console.log(response.data);
         res.send(response.data);
-    
+    } catch (error) {
+        console.error('Error fetching data from the remote server:', error.message);
+        // Send whatever data you have already received
+        if (error.response && error.response.data) {
+            res.status(error.response.status).send(error.response.data);
+        } else {
+            res.status(500).send('Error fetching data from the remote server');
+        }
+    }
 });
 
 
